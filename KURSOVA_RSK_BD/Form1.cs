@@ -23,8 +23,8 @@ namespace KURSOVA_RSK_BD
                 {
                     connection.Open();
                     connectionString = connectionStringBuilder.ConnectionString;
-                    EnterDataForm enterDataForm = new EnterDataForm(connectionString);
-                    enterDataForm.Show();
+                    Form enterModulesForm = new EnterModulesAndTime(connectionString);
+                    enterModulesForm.Show();
                     this.Visible = false;
                 }
                 catch (Exception exception)

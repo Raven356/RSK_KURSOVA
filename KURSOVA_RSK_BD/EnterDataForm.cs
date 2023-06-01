@@ -20,10 +20,21 @@ namespace KURSOVA_RSK_BD
             new List<string>() {"Р1"}
         };
         string connectionString;
-        public EnterDataForm(string connectionString)
+        decimal tz;
+        decimal tp;
+        decimal lcp;
+        decimal vcp;
+        decimal tvz;
+        public EnterDataForm(string connectionString, decimal tz, decimal tp, decimal lcp, decimal vcp, decimal tvz, List<List<string>> modules)
         {
             InitializeComponent();
             this.connectionString = connectionString;
+            this.tz = tz;
+            this.tp = tp;
+            this.lcp = lcp;
+            this.vcp = vcp;
+            this.tvz = tvz;
+            this.modules = modules;
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
@@ -72,6 +83,14 @@ namespace KURSOVA_RSK_BD
             for (int i = 0; i < numericUpDown2.Value; i++)
             {
                 dataGridView1.Rows.Add();
+            }
+
+            dataGridView2.Columns.Add("АС", "АС");
+            dataGridView2.Rows.Add();
+            for (int i = 1; i <= GVMUpDown.Value; i++)
+            {
+                dataGridView2.Columns.Add($"ГВМ{i}", $"ГВМ{i}");
+                dataGridView2.Rows.Add();
             }
         }
 
@@ -392,6 +411,51 @@ namespace KURSOVA_RSK_BD
                     sqlCommand.ExecuteNonQuery();
                 }
 
+                decimal tcp = lcp / vcp;
+                sqlCommand.CommandText = "Delete TIME_OF_SERVING";
+                sqlCommand.ExecuteNonQuery();
+
+                sqlCommand.CommandText = "Insert into TIME_OF_SERVING (Enter, ExitD, Value) values (@Enter, @ExitD, @Value)";
+                sqlCommand.Parameters.Add("@Enter", SqlDbType.VarChar, 20);
+                sqlCommand.Parameters.Add("@ExitD", SqlDbType.VarChar, 20);
+                sqlCommand.Parameters.Add("@Value", SqlDbType.Decimal);
+
+                for(int i = 1; i < dataGridView2.ColumnCount; i++)
+                {
+                    if (dataGridView2[i, 0].Value is not null)
+                    {
+                        sqlCommand.Parameters["@Enter"].Value = "АС";
+                        sqlCommand.Parameters["@ExitD"].Value = $"ГВМ{i}";
+                        sqlCommand.Parameters["@Value"].Value = decimal.Parse(dataGridView2[i, 0].Value.ToString()) * tcp + tvz + tvz + tz;
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                }
+
+                for (int i = 1; i < dataGridView2.RowCount; i++)
+                {
+                    if (dataGridView2[0, i].Value is not null)
+                    {
+                        sqlCommand.Parameters["@Enter"].Value = $"ГВМ{i}";
+                        sqlCommand.Parameters["@ExitD"].Value = "АС";
+                        sqlCommand.Parameters["@Value"].Value = decimal.Parse(dataGridView2[0, i].Value.ToString()) * tcp + tvz + tvz + tp;
+                        sqlCommand.ExecuteNonQuery();
+                    }
+                }
+
+                for(int i = 1; i < dataGridView2.RowCount; i++)
+                {
+                    for(int j = 1; j < dataGridView2.ColumnCount; j++)
+                    {
+                        if (dataGridView2[j, i].Value is not null && i != j)
+                        {
+                            sqlCommand.Parameters["@Enter"].Value = $"ГВМ{i}";
+                            sqlCommand.Parameters["@ExitD"].Value = $"ГВМ{j}";
+                            sqlCommand.Parameters["@Value"].Value = decimal.Parse(dataGridView2[j, i].Value.ToString()) * tcp + tvz + tvz + tp + tz;
+                            sqlCommand.ExecuteNonQuery();
+                        }
+                    }
+                }
+
                 sqlTransaction.Commit();
                 MessageBox.Show("Inserted!");
                 MessageBox.Show($"Кількість ДУ = {amountOfDY}");
@@ -401,6 +465,26 @@ namespace KURSOVA_RSK_BD
             {
                 sqlTransaction.Rollback();
                 MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void GVMUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            if(GVMUpDown.Value < dataGridView2.ColumnCount)
+            {
+                for(int i = dataGridView2.ColumnCount - 1; i >= GVMUpDown.Value; i--)
+                {
+                    dataGridView2.Columns.RemoveAt(i);
+                    dataGridView2.Rows.RemoveAt(i);
+                }
+            }
+            else
+            {
+                for(int i = dataGridView2.ColumnCount; i <= GVMUpDown.Value; i++)
+                {
+                    dataGridView2.Columns.Add($"ГВМ{i}", $"ГВМ{i}");
+                    dataGridView2.Rows.Add();
+                }
             }
         }
     }

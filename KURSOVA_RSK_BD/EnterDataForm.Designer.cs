@@ -36,9 +36,14 @@
             button1 = new Button();
             tObText = new TextBox();
             label3 = new Label();
+            dataGridView2 = new DataGridView();
+            GVMUpDown = new NumericUpDown();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)GVMUpDown).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
@@ -50,7 +55,7 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(446, 277);
+            dataGridView1.Size = new Size(464, 381);
             dataGridView1.TabIndex = 0;
             // 
             // numericUpDown1
@@ -95,7 +100,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(183, 388);
+            button1.Location = new Point(440, 512);
             button1.Name = "button1";
             button1.Size = new Size(146, 50);
             button1.TabIndex = 5;
@@ -120,11 +125,45 @@
             label3.TabIndex = 7;
             label3.Text = "Введіть tоб";
             // 
+            // dataGridView2
+            // 
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToDeleteRows = false;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(578, 87);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.RowTemplate.Height = 29;
+            dataGridView2.Size = new Size(437, 381);
+            dataGridView2.TabIndex = 8;
+            // 
+            // GVMUpDown
+            // 
+            GVMUpDown.Location = new Point(945, 21);
+            GVMUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            GVMUpDown.Name = "GVMUpDown";
+            GVMUpDown.Size = new Size(51, 27);
+            GVMUpDown.TabIndex = 9;
+            GVMUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            GVMUpDown.ValueChanged += GVMUpDown_ValueChanged;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(816, 23);
+            label4.Name = "label4";
+            label4.Size = new Size(103, 20);
+            label4.TabIndex = 10;
+            label4.Text = "Кількість ГВМ";
+            // 
             // EnterDataForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(1134, 596);
+            Controls.Add(label4);
+            Controls.Add(GVMUpDown);
+            Controls.Add(dataGridView2);
             Controls.Add(label3);
             Controls.Add(tObText);
             Controls.Add(button1);
@@ -139,6 +178,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)GVMUpDown).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -153,5 +194,8 @@
         private Button button1;
         private TextBox tObText;
         private Label label3;
+        private DataGridView dataGridView2;
+        private NumericUpDown GVMUpDown;
+        private Label label4;
     }
 }
