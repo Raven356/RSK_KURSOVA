@@ -22,10 +22,10 @@ namespace KURSOVA_RSK_BD
         private void insertButton_Click(object sender, EventArgs e)
         {
             List<List<string>> modules = new List<List<string>>();
-            for(int i = 0; i < dataGridView1.RowCount; i++)
+            for (int i = 0; i < dataGridView1.RowCount; i++)
             {
                 modules.Add(new List<string>());
-                for(int j = 0; j < dataGridView1.Columns.Count; j++)
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
                 {
                     if (dataGridView1[j, i].Value is not null)
                     {

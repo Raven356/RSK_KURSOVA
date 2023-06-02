@@ -13,12 +13,7 @@ namespace KURSOVA_RSK_BD
 {
     public partial class EnterDataForm : Form
     {
-        List<List<string>> modules = new List<List<string>>() {
-            new List<string>() {"Т1", "С1", "Т2", "Т4", "Т5", "Т3", "Ф2", "Ф1", "С3"},
-            new List<string>() {"Ф3", "Ф4"},
-            new List<string>() {"С2"},
-            new List<string>() {"Р1"}
-        };
+        List<List<string>> modules = new List<List<string>>();
         string connectionString;
         decimal tz;
         decimal tp;
@@ -256,21 +251,24 @@ namespace KURSOVA_RSK_BD
 
                 for (int i = 0; i < fullAmounts.Count - 1; i++)
                 {
-                    if (int.Parse(fullAmounts[i].Split("-")[1]) < int.Parse(fullAmounts[i + 1].Split("-")[1]))
+                    for (int j = i + 1; j < fullAmounts.Count; j++)
                     {
-                        (fullAmounts[i], fullAmounts[i + 1]) = (fullAmounts[i + 1], fullAmounts[i]);
-                    }
-                    else if (int.Parse(fullAmounts[i].Split("-")[1]) == int.Parse(fullAmounts[i + 1].Split("-")[1]))
-                    {
-                        if (int.Parse(fullAmounts[i].Split("-")[2]) < int.Parse(fullAmounts[i + 1].Split("-")[2]))
+                        if (int.Parse(fullAmounts[i].Split("-")[1]) < int.Parse(fullAmounts[j].Split("-")[1]))
                         {
-                            (fullAmounts[i], fullAmounts[i + 1]) = (fullAmounts[i + 1], fullAmounts[i]);
+                            (fullAmounts[i], fullAmounts[j]) = (fullAmounts[j], fullAmounts[i]);
                         }
-                        else if (int.Parse(fullAmounts[i].Split("-")[2]) == int.Parse(fullAmounts[i + 1].Split("-")[2]))
+                        else if (int.Parse(fullAmounts[i].Split("-")[1]) == int.Parse(fullAmounts[j].Split("-")[1]))
                         {
-                            if (int.Parse(fullAmounts[i].Split("-")[3]) > int.Parse(fullAmounts[i + 1].Split("-")[3]))
+                            if (int.Parse(fullAmounts[i].Split("-")[2]) < int.Parse(fullAmounts[j].Split("-")[2]))
                             {
-                                (fullAmounts[i], fullAmounts[i + 1]) = (fullAmounts[i + 1], fullAmounts[i]);
+                                (fullAmounts[i], fullAmounts[j]) = (fullAmounts[j], fullAmounts[i]);
+                            }
+                            else if (int.Parse(fullAmounts[i].Split("-")[2]) == int.Parse(fullAmounts[j].Split("-")[2]))
+                            {
+                                if (int.Parse(fullAmounts[i].Split("-")[3]) > int.Parse(fullAmounts[j].Split("-")[3]))
+                                {
+                                    (fullAmounts[i], fullAmounts[j]) = (fullAmounts[j], fullAmounts[i]);
+                                }
                             }
                         }
                     }
@@ -420,7 +418,7 @@ namespace KURSOVA_RSK_BD
                 sqlCommand.Parameters.Add("@ExitD", SqlDbType.VarChar, 20);
                 sqlCommand.Parameters.Add("@Value", SqlDbType.Decimal);
 
-                for(int i = 1; i < dataGridView2.ColumnCount; i++)
+                for (int i = 1; i < dataGridView2.ColumnCount; i++)
                 {
                     if (dataGridView2[i, 0].Value is not null)
                     {
@@ -442,9 +440,9 @@ namespace KURSOVA_RSK_BD
                     }
                 }
 
-                for(int i = 1; i < dataGridView2.RowCount; i++)
+                for (int i = 1; i < dataGridView2.RowCount; i++)
                 {
-                    for(int j = 1; j < dataGridView2.ColumnCount; j++)
+                    for (int j = 1; j < dataGridView2.ColumnCount; j++)
                     {
                         if (dataGridView2[j, i].Value is not null && i != j)
                         {
@@ -470,9 +468,9 @@ namespace KURSOVA_RSK_BD
 
         private void GVMUpDown_ValueChanged(object sender, EventArgs e)
         {
-            if(GVMUpDown.Value < dataGridView2.ColumnCount)
+            if (GVMUpDown.Value < dataGridView2.ColumnCount - 1)
             {
-                for(int i = dataGridView2.ColumnCount - 1; i >= GVMUpDown.Value; i--)
+                for (int i = dataGridView2.ColumnCount - 1; i >= GVMUpDown.Value + 1; i--)
                 {
                     dataGridView2.Columns.RemoveAt(i);
                     dataGridView2.Rows.RemoveAt(i);
@@ -480,12 +478,18 @@ namespace KURSOVA_RSK_BD
             }
             else
             {
-                for(int i = dataGridView2.ColumnCount; i <= GVMUpDown.Value; i++)
+                for (int i = dataGridView2.ColumnCount; i <= GVMUpDown.Value; i++)
                 {
                     dataGridView2.Columns.Add($"ГВМ{i}", $"ГВМ{i}");
                     dataGridView2.Rows.Add();
                 }
             }
+        }
+
+        private void EnterDataForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Form form = Application.OpenForms[0];
+            form.Close();
         }
     }
 }

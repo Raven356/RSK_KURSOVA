@@ -114,7 +114,7 @@
             tObText.Name = "tObText";
             tObText.Size = new Size(125, 27);
             tObText.TabIndex = 6;
-            tObText.Text = "0,5";
+            tObText.Text = "0,4";
             // 
             // label3
             // 
@@ -144,7 +144,7 @@
             GVMUpDown.Name = "GVMUpDown";
             GVMUpDown.Size = new Size(51, 27);
             GVMUpDown.TabIndex = 9;
-            GVMUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            GVMUpDown.Value = new decimal(new int[] { 5, 0, 0, 0 });
             GVMUpDown.ValueChanged += GVMUpDown_ValueChanged;
             // 
             // label4
@@ -174,6 +174,7 @@
             Controls.Add(dataGridView1);
             Name = "EnterDataForm";
             Text = "EnterDataForm";
+            FormClosed += EnterDataForm_FormClosed;
             Load += EnterDataForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();

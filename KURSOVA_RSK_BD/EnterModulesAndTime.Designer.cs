@@ -112,7 +112,7 @@
             tzTextBox.Name = "tzTextBox";
             tzTextBox.Size = new Size(125, 27);
             tzTextBox.TabIndex = 6;
-            tzTextBox.Text = "5";
+            tzTextBox.Text = "6";
             // 
             // tpTextBox
             // 
@@ -128,7 +128,7 @@
             lcpTextBox.Name = "lcpTextBox";
             lcpTextBox.Size = new Size(125, 27);
             lcpTextBox.TabIndex = 8;
-            lcpTextBox.Text = "20";
+            lcpTextBox.Text = "35";
             // 
             // VcpTextBox
             // 
@@ -136,7 +136,7 @@
             VcpTextBox.Name = "VcpTextBox";
             VcpTextBox.Size = new Size(125, 27);
             VcpTextBox.TabIndex = 9;
-            VcpTextBox.Text = "60";
+            VcpTextBox.Text = "30";
             // 
             // tvzTextBox
             // 
@@ -144,7 +144,7 @@
             tvzTextBox.Name = "tvzTextBox";
             tvzTextBox.Size = new Size(125, 27);
             tvzTextBox.TabIndex = 10;
-            tvzTextBox.Text = "0,17";
+            tvzTextBox.Text = "0,25";
             // 
             // amountOfModulesUpDown
             // 
@@ -153,7 +153,7 @@
             amountOfModulesUpDown.Name = "amountOfModulesUpDown";
             amountOfModulesUpDown.Size = new Size(54, 27);
             amountOfModulesUpDown.TabIndex = 11;
-            amountOfModulesUpDown.Value = new decimal(new int[] { 4, 0, 0, 0 });
+            amountOfModulesUpDown.Value = new decimal(new int[] { 5, 0, 0, 0 });
             amountOfModulesUpDown.ValueChanged += amountOfModulesUpDown_ValueChanged;
             // 
             // label6
